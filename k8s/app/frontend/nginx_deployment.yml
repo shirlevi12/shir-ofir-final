@@ -17,9 +17,17 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/v2/shir/ofir:nginx
+        image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/v3/shir-ofir:nginx
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d/default.conf
+          readOnly: true
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -51,3 +59,35 @@ spec:
       target:
         type: Utilization
         averageUtilization: 70
+
+---
+# ConfigMap for nginx.conf (replace with your actual config)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: frontend
+data:
+  default.conf: |
+   server {
+    listen 80;
+
+    location /static/ {
+        alias /static/;
+        access_log off;
+    }
+
+    location /media/ {
+        alias /media/;
+        access_log off;
+    }
+
+    location / {
+        proxy_pass http://django-service.frontend.svc.cluster.local:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;  # for CSRF
+        proxy_set_header X-CSRFToken $http_x_csrftoken; # forwardd CSRF token
+    }
+}
