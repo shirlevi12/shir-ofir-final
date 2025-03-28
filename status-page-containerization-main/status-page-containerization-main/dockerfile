@@ -1,0 +1,26 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y netcat-traditional build-essential libpq-dev && rm -rf /var/lib/apt/lists/*
+
+# Copy the whole inner Django app into /app
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY statuspage /app
+
+
+# Set environment
+ENV PYTHONPATH=/app
+
+# Copy the entrypoint script
+RUN chmod +x /app/entrypoint.sh
+
+EXPOSE 8000
+# Entrypoint script handles DB wait, migrations, superuser, then runs CMD
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+CMD ["gunicorn", "statuspage.wsgi:application", "--bind", "0.0.0.0:8000"]
