@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: django
-        image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/v2/shir/ofir:status-page
+        image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/v3/shir-ofir:status-page
         ports:
         - containerPort: 80
       affinity:
