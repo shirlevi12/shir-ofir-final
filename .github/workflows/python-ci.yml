@@ -1,0 +1,46 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Check out the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # 2. Set up Python environment
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    # 3. Install dependencies from requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r status-page/status-page/requirements.txt
+
+    # 5. Build Documentation (אם יש צורך)
+    #- name: Build MkDocs Documentation
+     # run: |
+      #  mkdocs build
+     # working-directory: status-page/status-page
+
+    # 6. (אופציונלי) Deploy if needed
+    # - name: Deploy to production
+    #   run: |
+    #     ./deploy_script.sh
+
+    # 7. Clean up (אופציונלי)
+    # - name: Clean up
+    #   run: |
+    #     rm -rf build/
