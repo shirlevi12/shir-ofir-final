@@ -1,0 +1,12 @@
+controller:
+  rbac:
+    create: true
+  service:
+    type: LoadBalancer
+  ingressClassResource:
+    name: nginx-ingress
+    enabled: true
+    default: true
+    controllerValue: "k8s.io/ingress-nginx"
+  extraArgs:
+    update-status: "false"
