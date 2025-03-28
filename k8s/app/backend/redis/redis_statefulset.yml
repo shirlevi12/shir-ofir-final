@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/v2/shir/ofir:redis
+        image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/v3/shir-ofir:redis
         ports:
         - containerPort: 6379
         command:
