@@ -30,10 +30,10 @@ jobs:
         pip install -r status-page-containerization-main/status-page-containerization-main/requirements.txt
 
     # 5. Build Documentation (אם יש צורך)
-    #- name: Build MkDocs Documentation
-     # run: |
-      #  mkdocs build
-     # working-directory: status-page/status-page
+    - name: Build MkDocs Documentation
+      run: |
+       mkdocs build
+       working-directory: status-page-containerization-main/status-page-containerization-main/mkdocs.yml
 
     # 6. (אופציונלי) Deploy if needed
     # - name: Deploy to production
