@@ -33,7 +33,7 @@ jobs:
     - name: Build MkDocs Documentation
       run: |
        mkdocs build
-       working-directory: status-page-containerization-main/status-page-containerization-main/mkdocs.yml
+       working-directory: status-page-containerization-main/status-page-containerization-main
 
     # 6. (אופציונלי) Deploy if needed
     # - name: Deploy to production
