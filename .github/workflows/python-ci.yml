@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r status-page/status-page/requirements.txt
+        pip install -r status-page-containerization-main/status-page-containerization-main/requirements.txt
 
     # 5. Build Documentation (אם יש צורך)
     #- name: Build MkDocs Documentation
